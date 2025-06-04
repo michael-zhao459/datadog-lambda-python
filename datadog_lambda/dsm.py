@@ -53,7 +53,9 @@ def _dsm_set_sns_context(event):
         return calculate_sns_payload_size(record, context_json)
 
     def sns_arn_extractor(record):
-        sns_data = record.get("Sns", {})
+        sns_data = record.get("Sns")
+        if not sns_data:
+            return ""
         return sns_data.get("TopicArn", "")
 
     _dsm_set_context_helper(
@@ -69,5 +71,4 @@ def _dsm_set_sqs_context(event):
 
     def sqs_arn_extractor(record):
         return record.get("eventSourceARN", "")
-
     _dsm_set_context_helper(event, "sqs", sqs_arn_extractor, sqs_payload_calculator)
