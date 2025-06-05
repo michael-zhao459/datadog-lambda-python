@@ -33,7 +33,6 @@ def _dsm_set_context_helper(event, service_type, arn_extractor, payload_size_cal
     for record in records:
         try:
             arn = arn_extractor(record)
-            print(f"ARN: {arn}")
             context_json = get_datastreams_context(record)
             payload_size = payload_size_calculator(record, context_json)
 
